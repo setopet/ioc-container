@@ -11,13 +11,17 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.function.Supplier;
 
-public class IocContainer {
+public class IocContainer implements Container {
 
   private final ConcurrentMap<Class<?>, Supplier<?>> singletons = new ConcurrentHashMap<>();
   private final ConcurrentMap<Class<?>, Class<?>> contracts = new ConcurrentHashMap<>();
   private final ConcurrentMap<String, Object> nameBindings = new ConcurrentHashMap<>();
   private final ConcurrentMap<Class<? extends Annotation>, Object> qualifierBindings =
       new ConcurrentHashMap<>();
+
+  public IocContainer() {
+    singletons.put(Container.class, () -> this);
+  }
 
   public <T> T resolve(Class<T> type) {
     return resolveInternal(type, new HashSet<>());

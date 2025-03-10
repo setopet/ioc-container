@@ -100,6 +100,16 @@ public class IocContainerTest {
     }
   }
 
+  public static class ServiceO {
+
+    private final Container container;
+
+    @Inject
+    public ServiceO(final Container container) {
+      this.container = container;
+    }
+  }
+
   public interface Contract {}
 
   @Qualifier
@@ -216,5 +226,11 @@ public class IocContainerTest {
   public void shouldProvideNewInstancesForNonSingleton() {
     container.registerContract(ServiceA.class);
     assertNotSame(container.resolve(ServiceA.class), container.resolve(ServiceA.class));
+  }
+
+  @Test
+  public void shouldProvideContainer() {
+    container.registerContract(ServiceO.class);
+    assertSame(container, container.resolve(ServiceO.class).container);
   }
 }
