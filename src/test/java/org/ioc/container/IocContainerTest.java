@@ -10,6 +10,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class IocContainerTest {
 
+  public static class ServiceA implements Contract {}
+
   public static class ServiceB {
 
     public ServiceB(final String someString) {}
@@ -117,8 +119,6 @@ public class IocContainerTest {
   public @interface SpecialType {}
 
   private final IocContainer container = new IocContainer();
-
-  public static class ServiceA implements Contract {}
 
   @Test
   public void shouldResolveServiceWithoutDependencies() {
